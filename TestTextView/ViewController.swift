@@ -14,50 +14,27 @@ class ViewController: UIViewController {
     @IBOutlet private weak var textView: UITextView! {
         didSet {
             textView.delegate = self
+            textView.text = "( ͡° ͜ʖ ͡🇺🇸°)༼ つ ͡° ͜ʖ ͡🏎° ༽つ"
         }
     }
     
     // MARK: - Properties
     
     private var testString = ""
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-
+    
 }
 
 
 extension ViewController: UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        debugPrint("entering data", text)
-        
-        let newRange = Range(range, in: testString)!
-        
-        testString = testString.replacingCharacters(in: newRange, with: text)
-
-        debugPrint("testString", testString)
-        
+        debugPrint("range", range, textView.text.count)
+        guard let newRange = Range(range, in: textView.text) else {
+            return false
+        }
+        testString = textView.text.replacingCharacters(in: newRange, with: text)
         return true
     }
-    
-    /*
-     "entering data" "༼ つ ͡° ͜ʖ ͡° ༽つ"
-     "testString" "༼ つ ͡° ͜ʖ ͡° ༽つ"
-     "entering data" ""
-     "testString" "༼ つ ͡° ͜ʖ ͡° ༽"
-     "entering data" ""
-     "testString" "༼ つ ͡° ͜ʖ ͡° "
-     "entering data" ""
-     "testString" "༼ つ ͡° ͜ʖ ͡°"
-     "entering data" ""
-     "testString" "༼ つ ͡° ͜ʖ ͡"
-     "entering data" "" and I get app crash
-    */
     
 }
 
